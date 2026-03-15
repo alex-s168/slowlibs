@@ -86,6 +86,8 @@ Expected output:
   0x21, 0x62, 0xC4, 0xBD, 0xC5, 0x43, 0xF5, 0x51, 0xEF, 0x10,
 ```
 
+
+
 ## UnpaddedKChaCha
 Variable-length input hash function based on HChaCha20.
 
@@ -105,6 +107,25 @@ You should only use this in applications where you are sure you don't need paddi
   - let the new state be `hchacha20(key: state, nonce: protocol_constant)`
 - The result is the output state
 
+### Test vector
+The data is the following ASCII string (without null-terminator):
+```
+DoNotCurrently-Use-KChaCha-InSensitive-Applications!!NeedingMoreBytes-for-getting-to-three-blocks.
+```
+
+With the protocol constant:
+```
+  0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+  0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c,
+  0x0d, 0x0e, 0x0f, 0xfa
+```
+
+Running 20-round UnpaddedKChaCha, should produce:
+```
+  0x0c, 0xad, 0xaa, 0xee, 0xb6, 0xb3, 0x83, 0x0d, 0x92, 0xbd, 0xa5,
+  0x09, 0x3c, 0x91, 0x04, 0x30, 0xe2, 0xa6, 0x6b, 0x49, 0x17, 0xd2,
+  0xcb, 0x43, 0xef, 0xc8, 0x57, 0x71, 0x7e, 0x29, 0xdb, 0x37,
+```
 
 
 
@@ -209,17 +230,14 @@ Running 20-round KChaCha, should produce:
 
 
 ### Properties
-To help analyze `KChaCha`, we'll analyze the inner code after the padding has been applied, and we'll also simplify the initialization vector:
+To help analyze `KChaCha`, we'll analyze the inner code after the padding has been applied:
 ```rs
 fn inner(blocks: &[[u8;32]]) -> [u8;32] {
   let mut state = [0_u8; 32];
-  state[..7] = medium_entropy_constant;
-
   for mut block in blocks {
     state = hchacha20(key:   block ^ state,
                       nonce: low_entropy_constant);
   }
-
   state
 }
 ```
@@ -293,7 +311,7 @@ fn balloon(
 - UnpaddedKChaCha8-Balloon: Simpler than the standard variants. Should only be used for Proof-of-work.
 
 
-### Test vector
+### Test vector: KChaCha8-Balloon
 Hashing this password as ASCII (without null-terminator):
 ```
 SeriousPassword
@@ -323,6 +341,41 @@ Should produce:
   0x86, 0xaf, 0x78, 0x8a, 0xe9, 0x9d, 0x98, 0xee, 0x1e, 0x24, 0xc4,
   0xb4, 0x45, 0xc4, 0xb7, 0xc7, 0x35, 0xe0, 0xa3, 0x14, 0xaf
 ```
+
+
+### Test vector: UnpaddedKChaCha8-Balloon
+Hashing this password as ASCII (without null-terminator):
+```
+SeriousPassword
+```
+
+With the following protocol constant:
+```
+  0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+  0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c,
+  0x0d, 0x0e, 0x0f, 0xfa
+```
+
+And the following salt:
+```
+  0xda, 0x0e, 0xb9, 0xe9, 0x8b, 0x48, 0x2a, 0x18,
+  0x2f, 0xe3, 0xdf, 0xd3, 0x74, 0x39, 0xa9, 0xdd,
+```
+
+With the following parameters:
+- Variant: UnpaddedKChaCha8-Balloon
+- Space: 4MiB (`4 * 1024 * 1024` bytes)
+- Balloon rounds: 1
+
+Should produce:
+```
+  0x2d, 0x80, 0x82, 0xba, 0x7c, 0x18, 0xce, 0xee, 0x8a, 0x3a, 0x14,
+  0x11, 0x17, 0xc5, 0x40, 0x78, 0xdd, 0x2a, 0xbf, 0xc8, 0x7f, 0x8c,
+  0x37, 0xf4, 0x15, 0x81, 0x54, 0x44, 0xa1, 0xae, 0x37, 0x58,
+```
+
+
+
 
 
 ## References

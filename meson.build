@@ -67,9 +67,16 @@ test('chacha20-h_test_vector', executable('chacha20-h_test_vector',
 test('chacha20-k_test_vector', executable('chacha20-k_test_vector',
   './tests/chacha20/kchacha.c',
   dependencies: [slowlibs_dep]))
+test('chacha20-unpaddedk_test_vector', executable('chacha20-unpaddedk_test_vector',
+  './tests/chacha20/kchacha_unpadded.c',
+  dependencies: [slowlibs_dep]))
 
 test('chacha20-balloon', executable('chacha20-balloon',
   './tests/chacha20/balloon.c',
+  dependencies: [slowlibs_dep]))
+
+test('chacha20-balloon-unpadded', executable('chacha20-balloon-unpadded',
+  './tests/chacha20/balloon_unpadded.c',
   dependencies: [slowlibs_dep]))
   
 test('poly1305-test_vector_bitint', executable('poly1305-test_vector_bitint',

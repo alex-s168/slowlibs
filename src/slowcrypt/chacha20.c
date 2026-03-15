@@ -182,12 +182,13 @@ void slowcrypt_kchacha(uint8_t state[32],
                        uint8_t const protocol_constant[16],
                        uint8_t const data[],
                        unsigned data_len,
-                       int rounds)
+                       int rounds,
+                       int unpadded)
 {
   int i, chunk_len;
   slowcrypt_chacha20 cstate;
   uint8_t swap[32];
-  int add_trailing_block = 1;
+  int add_trailing_block = !unpadded;
 
   for (i = 0; i < 32; i++)
     state[i] = 0;
@@ -202,7 +203,7 @@ void slowcrypt_kchacha(uint8_t state[32],
     for (; i < 31; i++)
       swap[i] = 0;
 
-    if (chunk_len != 32) {
+    if (!unpadded && chunk_len != 32) {
       add_trailing_block = 0;
       swap[31] = 32 - chunk_len;
     }

@@ -155,6 +155,9 @@ void slowcrypt_chacha20_run(slowcrypt_chacha20* state,
  * - rounds:
  *     Recommended: 20, 12, or 8
  *
+ * - unpadded:
+ *     Run UnpaddedKChaCha instead of KChaCha.
+ *
  *
  * Security: Only these applications are currently permitted!!
  * - cryptographic hash function of per-protocol fixed-length high-entropy data:
@@ -183,7 +186,8 @@ void slowcrypt_kchacha(uint8_t out[32],
                        uint8_t const protocol_constant[16],
                        uint8_t const data[],
                        unsigned data_len,
-                       int rounds);
+                       int rounds,
+                       int unpadded);
 
 /**
  *
@@ -198,7 +202,8 @@ int slowcrypt_balloon_kchacha(uint8_t out[32],
                               unsigned salt_len,
                               unsigned buffer_size,
                               unsigned balloon_rounds,
-                              unsigned kchacha_rounds);
+                              unsigned kchacha_rounds,
+                              int unpadded);
 
 /*
  * Arguments:
