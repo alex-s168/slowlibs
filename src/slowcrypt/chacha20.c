@@ -200,7 +200,7 @@ void slowcrypt_kchacha(uint8_t state[32],
 
     for (i = 0; i < chunk_len; i++)
       swap[i] = data[i];
-    for (; i < 31; i++)
+    for (; i < 32; i++)
       swap[i] = 0;
 
     if (!unpadded && chunk_len != 32) {
