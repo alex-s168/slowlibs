@@ -181,7 +181,7 @@ static void parse_rng_args(unsigned long* oLimit,
 static void run_kchacha(char** args)
 {
   static char const help[] =
-      "kchacha [--rounds N] <protocol-constant>\n"
+      "kchacha [--rounds N] [--unpadded] <protocol-constant>\n"
       "\n"
       "Run the KChaCha hash function\n"
       "\n"
@@ -197,6 +197,7 @@ static void run_kchacha(char** args)
   int i;
   uint8_t* input;
   unsigned long len;
+  int unpadded = 0;
 
   for (; *args; args++) {
     if (anyeq(*args, "-h", "-help", "--help")) {
@@ -205,6 +206,8 @@ static void run_kchacha(char** args)
     } else if (anyeq(*args, "-r", "-rounds", "--rounds") && args[1]) {
       args++;
       nrounds = atoi(*args);
+    } else if (anyeq(*args, "-unpadded", "--unpadded")) {
+      unpadded = 1;
     } else if (npos == 0 && ++npos) {
       protocol_constant_hex = *args;
     } else {
@@ -222,7 +225,7 @@ static void run_kchacha(char** args)
                 protocol_constant_hex);
 
   input = file_read_all(stdin, &len);
-  slowcrypt_kchacha(hash, protocol_constant, input, len, nrounds, 0);
+  slowcrypt_kchacha(hash, protocol_constant, input, len, nrounds, unpadded);
 
   for (i = 0; i < 32; i++)
     printf("%02x", hash[i]);
@@ -232,7 +235,8 @@ static void run_kchacha(char** args)
 static void run_balloon_kchacha(char** args)
 {
   static char const help[] =
-      "balloon-kchacha [--chacha-rounds N] [--space Bytes] [--balloon-rounds "
+      "balloon-kchacha [--chacha-rounds N] [--unpadded] [--space Bytes] "
+      "[--balloon-rounds "
       "N] <protocol-constant>\n"
       "\n"
       "Run the balloon-hash function using KChaCha as inner function, with "
@@ -250,6 +254,7 @@ static void run_balloon_kchacha(char** args)
   int i;
   uint8_t* input;
   unsigned long len;
+  int unpadded = 0;
 
   for (; *args; args++) {
     if (anyeq(*args, "-h", "-help", "--help")) {
@@ -261,6 +266,8 @@ static void run_balloon_kchacha(char** args)
     } else if (anyeq(*args, "-chacha-rounds", "--chacha-rounds") && args[1]) {
       args++;
       chacha_rounds = atoi(*args);
+    } else if (anyeq(*args, "-unpadded", "--unpadded")) {
+      unpadded = 1;
     } else if (anyeq(*args, "-s", "-space", "--space") && args[1]) {
       args++;
       space = atoi(*args);
@@ -290,7 +297,7 @@ static void run_balloon_kchacha(char** args)
 
   if (slowcrypt_balloon_kchacha(hash, protocol_constant, input, len, salt,
                                 sizeof salt, space, balloon_rounds,
-                                chacha_rounds, 0)) {
+                                chacha_rounds, unpadded)) {
     fprintf(stderr, "oom\n");
     exit(1);
   }
