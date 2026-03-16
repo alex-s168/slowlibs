@@ -1,5 +1,9 @@
 project('slowlibs', 'c', 'cpp',
-  version: '1.0.0-pre.1')
+  version: '1.0.0-pre.1',
+  default_options: [
+    'c_std=c99',
+    'warning_level=3'
+    ])
 
 install_headers(
   './include/slowlibs/chacha20.h',
@@ -69,6 +73,9 @@ test('chacha20-k_test_vector', executable('chacha20-k_test_vector',
   dependencies: [slowlibs_dep]))
 test('chacha20-unpaddedk_test_vector', executable('chacha20-unpaddedk_test_vector',
   './tests/chacha20/kchacha_unpadded.c',
+  dependencies: [slowlibs_dep]))
+test('chacha20-unpaddedk_test2', executable('chacha20-unpaddedk_test2',
+  './tests/chacha20/kchacha_unpadded2.c',
   dependencies: [slowlibs_dep]))
 
 test('chacha20-balloon', executable('chacha20-balloon',

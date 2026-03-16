@@ -193,7 +193,7 @@ void slowcrypt_kchacha(uint8_t state[32],
   for (i = 0; i < 32; i++)
     state[i] = 0;
 
-  for (; (int)data_len >= 0; data_len -= 32, data += 32) {
+  for (; (int)data_len > 0; data_len -= 32, data += 32) {
     chunk_len = data_len;
     if (chunk_len > 32)
       chunk_len = 32;
@@ -215,7 +215,7 @@ void slowcrypt_kchacha(uint8_t state[32],
   }
 
   if (add_trailing_block) {
-    for (; i < 31; i++)
+    for (i = 0; i < 31; i++)
       swap[i] = state[i];
     swap[31] = 32 ^ state[i];
 

@@ -222,7 +222,7 @@ static void run_kchacha(char** args)
                 protocol_constant_hex);
 
   input = file_read_all(stdin, &len);
-  slowcrypt_kchacha(hash, protocol_constant, input, len, nrounds);
+  slowcrypt_kchacha(hash, protocol_constant, input, len, nrounds, 0);
 
   for (i = 0; i < 32; i++)
     printf("%02x", hash[i]);
@@ -290,7 +290,7 @@ static void run_balloon_kchacha(char** args)
 
   if (slowcrypt_balloon_kchacha(hash, protocol_constant, input, len, salt,
                                 sizeof salt, space, balloon_rounds,
-                                chacha_rounds)) {
+                                chacha_rounds, 0)) {
     fprintf(stderr, "oom\n");
     exit(1);
   }
