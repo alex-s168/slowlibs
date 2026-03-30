@@ -1,0 +1,208 @@
+{
+  "userAgent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Mobile Safari/537.36",
+  "msph": {
+    "UnpaddedKChaCha4": 1.055,
+    "UnpaddedKChaCha8": 1.0509999996423722,
+    "UnpaddedKChaCha12": 1.0609999996423722,
+    "Balloon4-1024": 0.6311258278935161,
+    "Balloon4-65536": 77.10000002384186,
+    "Balloon4-131072": 33.77217630857278,
+    "Balloon4-524288": 143.14705882352942,
+    "Balloon4-1048576": 275.72857142857146,
+    "Balloon4-16777216": 9114.100000023842
+  },
+  "results": {
+    "Warming up JIT (UnpaddedKChaCha4)": {
+      "took": 141.70000004768372,
+      "data": {
+        "iters": 800
+      }
+    },
+    "UnpaddedKChaCha4": {
+      "took": 105.5,
+      "data": {
+        "iters": 100
+      }
+    },
+    "Warming up JIT (UnpaddedKChaCha8)": {
+      "took": 161.70000004768372,
+      "data": {
+        "iters": 800
+      }
+    },
+    "UnpaddedKChaCha8": {
+      "took": 105.09999996423721,
+      "data": {
+        "iters": 100
+      }
+    },
+    "Warming up JIT (UnpaddedKChaCha12)": {
+      "took": 162.39999997615814,
+      "data": {
+        "iters": 800
+      }
+    },
+    "UnpaddedKChaCha12": {
+      "took": 106.09999996423721,
+      "data": {
+        "iters": 100
+      }
+    },
+    "Warming up JIT (Balloon)": {
+      "took": 1595,
+      "data": {}
+    },
+    "PoW=8  @ 1KiB, test 1": {
+      "took": 27.600000023841858,
+      "data": {
+        "iters": 8,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 2": {
+      "took": 150.29999995231628,
+      "data": {
+        "iters": 194,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 3": {
+      "took": 484.39999997615814,
+      "data": {
+        "iters": 908,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 4": {
+      "took": 483.39999997615814,
+      "data": {
+        "iters": 902,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 5": {
+      "took": 142.60000002384186,
+      "data": {
+        "iters": 204,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 6": {
+      "took": 222.4000000357628,
+      "data": {
+        "iters": 378,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 7": {
+      "took": 1475.1000000238419,
+      "data": {
+        "iters": 3004,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 8": {
+      "took": 389,
+      "data": {
+        "iters": 722,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=9  @ 1KiB, test 1": {
+      "took": 349.60000002384186,
+      "data": {
+        "iters": 876,
+        "complexity": 9,
+        "mem": 1024
+      }
+    },
+    "PoW=9  @ 1KiB, test 2": {
+      "took": 95.30000001192093,
+      "data": {
+        "iters": 150,
+        "complexity": 9,
+        "mem": 1024
+      }
+    },
+    "PoW=6  @ 64KiB, test 1": {
+      "took": 937.1000000238419,
+      "data": {
+        "iters": 48,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 64KiB, test 2": {
+      "took": 4979,
+      "data": {
+        "iters": 288,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 64KiB, test 3": {
+      "took": 2040.4000000357628,
+      "data": {
+        "iters": 114,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 64KiB, test 4": {
+      "took": 69.70000004768372,
+      "data": {
+        "iters": 0,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=7  @ 64KiB, test 1": {
+      "took": 77.10000002384186,
+      "data": {
+        "iters": 0,
+        "complexity": 7,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 128KiB, test 1": {
+      "took": 12259.300000011921,
+      "data": {
+        "iters": 362,
+        "complexity": 6,
+        "mem": 131072
+      }
+    },
+    "PoW=5  @ 512KiB, test 1": {
+      "took": 2433.5,
+      "data": {
+        "iters": 16,
+        "complexity": 5,
+        "mem": 524288
+      }
+    },
+    "PoW=5  @ 1MiB, test 1": {
+      "took": 9650.5,
+      "data": {
+        "iters": 34,
+        "complexity": 5,
+        "mem": 1048576
+      }
+    },
+    "Balloon @ 16MiB": {
+      "took": 9114.100000023842,
+      "data": {
+        "iters": 0,
+        "complexity": 0,
+        "mem": 16777216
+      }
+    }
+  }
+}

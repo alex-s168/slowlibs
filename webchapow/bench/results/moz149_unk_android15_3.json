@@ -1,0 +1,208 @@
+{
+  "userAgent": "Mozilla/5.0 (Android 15; Mobile; rv:149.0) Gecko/149.0 Firefox/149.0",
+  "msph": {
+    "UnpaddedKChaCha4": 1.07,
+    "UnpaddedKChaCha8": 1.07,
+    "UnpaddedKChaCha12": 1.09,
+    "Balloon4-1024": 0.6490066225165563,
+    "Balloon4-65536": 64,
+    "Balloon4-131072": 47.56198347107438,
+    "Balloon4-524288": 198.1764705882353,
+    "Balloon4-1048576": 383.3142857142857,
+    "Balloon4-16777216": 12155
+  },
+  "results": {
+    "Warming up JIT (UnpaddedKChaCha4)": {
+      "took": 208,
+      "data": {
+        "iters": 800
+      }
+    },
+    "UnpaddedKChaCha4": {
+      "took": 107,
+      "data": {
+        "iters": 100
+      }
+    },
+    "Warming up JIT (UnpaddedKChaCha8)": {
+      "took": 171,
+      "data": {
+        "iters": 800
+      }
+    },
+    "UnpaddedKChaCha8": {
+      "took": 107,
+      "data": {
+        "iters": 100
+      }
+    },
+    "Warming up JIT (UnpaddedKChaCha12)": {
+      "took": 180,
+      "data": {
+        "iters": 800
+      }
+    },
+    "UnpaddedKChaCha12": {
+      "took": 109,
+      "data": {
+        "iters": 100
+      }
+    },
+    "Warming up JIT (Balloon)": {
+      "took": 1594,
+      "data": {}
+    },
+    "PoW=8  @ 1KiB, test 1": {
+      "took": 26,
+      "data": {
+        "iters": 8,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 2": {
+      "took": 156,
+      "data": {
+        "iters": 194,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 3": {
+      "took": 625,
+      "data": {
+        "iters": 908,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 4": {
+      "took": 673,
+      "data": {
+        "iters": 902,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 5": {
+      "took": 189,
+      "data": {
+        "iters": 204,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 6": {
+      "took": 336,
+      "data": {
+        "iters": 378,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 7": {
+      "took": 1818,
+      "data": {
+        "iters": 3004,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=8  @ 1KiB, test 8": {
+      "took": 650,
+      "data": {
+        "iters": 722,
+        "complexity": 8,
+        "mem": 1024
+      }
+    },
+    "PoW=9  @ 1KiB, test 1": {
+      "took": 661,
+      "data": {
+        "iters": 876,
+        "complexity": 9,
+        "mem": 1024
+      }
+    },
+    "PoW=9  @ 1KiB, test 2": {
+      "took": 98,
+      "data": {
+        "iters": 150,
+        "complexity": 9,
+        "mem": 1024
+      }
+    },
+    "PoW=6  @ 64KiB, test 1": {
+      "took": 1303,
+      "data": {
+        "iters": 48,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 64KiB, test 2": {
+      "took": 6970,
+      "data": {
+        "iters": 288,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 64KiB, test 3": {
+      "took": 2763,
+      "data": {
+        "iters": 114,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 64KiB, test 4": {
+      "took": 72,
+      "data": {
+        "iters": 0,
+        "complexity": 6,
+        "mem": 65536
+      }
+    },
+    "PoW=7  @ 64KiB, test 1": {
+      "took": 64,
+      "data": {
+        "iters": 0,
+        "complexity": 7,
+        "mem": 65536
+      }
+    },
+    "PoW=6  @ 128KiB, test 1": {
+      "took": 17265,
+      "data": {
+        "iters": 362,
+        "complexity": 6,
+        "mem": 131072
+      }
+    },
+    "PoW=5  @ 512KiB, test 1": {
+      "took": 3369,
+      "data": {
+        "iters": 16,
+        "complexity": 5,
+        "mem": 524288
+      }
+    },
+    "PoW=5  @ 1MiB, test 1": {
+      "took": 13416,
+      "data": {
+        "iters": 34,
+        "complexity": 5,
+        "mem": 1048576
+      }
+    },
+    "Balloon @ 16MiB": {
+      "took": 12155,
+      "data": {
+        "iters": 0,
+        "complexity": 0,
+        "mem": 16777216
+      }
+    }
+  }
+}

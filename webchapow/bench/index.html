@@ -1,0 +1,214 @@
+<html>
+  <head>
+    <title>webchapow benchmark</title>
+  </head>
+  <body>
+    <p>Total progress:</p>
+    <div id="tpg" style="width:100%;background-color:grey;">
+      <div id="tbar" style="width:0%;height:30px;background-color:green;"></div>
+    </div>
+    <p id="stat">Enable JS!</p>
+    <div id="pg" style="width:100%;background-color:grey;">
+      <div id="bar" style="width:0%;height:30px;background-color:green;"></div>
+    </div>
+
+    <div id="res" style="display:none;">
+      <p>Please upload this:</p>
+      <textarea id="res-data" cols="40" readonly>
+        NOT FINISHED
+      </textarea>
+    </div>
+
+    <script>
+GU=(b,o)=>(b[o]|(b[o+1]<<8)|(b[o+2]<<16)|(b[o+3]<<24))>>>0;
+SU=(b,o,v)=>{b[o+0]=v&255;b[o+1]=(v>>>8)&255;b[o+2]=(v>>>16)&255;b[o+3]=(v>>>24)&255};
+h=(o,k,n,R,/**/s,i,r,q) => {
+  s=new Uint32Array(16);
+  s.set([0x61707865,0x3320646e,0x79622d32,0x6b206574]);
+  for(i=0;i<8;i++)s[i+4]=GU(k,i*4);
+  for(i=0;i<4;i++)s[i+12]=GU(n,i*4);
+  r=(n,m,o,y)=>{o=s[n]^=s[m]+=s[o],s[n]=(o<<y)|(o>>>-y)};
+  q=(a,b,c,d)=>{
+    r(d,a,b,16),r(b,c,d,12),r(d,a,b,8),r(b,c,d,7)
+  };
+  for (; i < R / 2 + 4; i++)
+    q(0,4,8,12),q(1,5,9,13),q(2,6,10,14),q(3,7,11,15),
+    q(0,5,10,15),q(1,6,11,12),q(2,7,8,13),q(3,4,9,14);
+  for (i = 0; i < 8; i++)
+    SU(o, i * 4, s[(i > 3) * 8 + i])};
+K=(p,c,d,R,/**/i)=>{
+  p.fill(0);
+  while (d.length) {
+    for(i=0;i<32;i++)p[i]^=d[i]??0;
+    h(p,p,c,R);d=d.subarray(32);
+  }};
+B=(PC,P,S,NL,Ti,R,/**/Buf,cnt,LR,m,t,k,z,vc,rb,wt,yab,j,ju) => {
+  NL/=32;
+  Buf=new Uint8Array(NL*32);
+  LR=(i)=>Buf.subarray(i*32,(i+1)*32);
+  cnt=0;
+  z=new Uint8Array(P.length+S.length+68);
+  yab =new Uint8Array(32);
+  k=(o)=>K(o,PC,z.subarray(0,vc),R);
+  vc=0;
+  j=(d)=>{z.set(d,vc);vc+=d.length};
+  ju=(d)=>{SU(z,vc,d);vc+=4};
+
+  vc=0;ju(cnt++);j(P);j(S);k(LR(0));
+  for(m=1;m<NL;m++)
+    vc=0,ju(cnt++),j(LR(m-1)),k(LR(m));
+
+  for(t=0;t<Ti;t++)for(m=0;m<NL;m++) {
+    vc=0;ju(cnt++);j(LR(m ? m - 1 : NL - 1));j(LR(m));k(LR(m));
+
+    for(wt=0;wt<3;wt++) {
+      vc=0;ju(cnt++);j(S);ju(t);ju(m);ju(wt);k(yab);
+      rb=GU(yab, 0)%NL;
+      vc=0;ju(cnt++);j(LR(m));j(LR(rb));k(LR(m));
+    }}
+
+  return LR(NL-1).slice();
+};
+
+pow=(PC,b,r,n,NL,Ti,R,/**/lz,i)=>{
+  SU(b,0,n);b=B(PC,b,r,NL,Ti,R);
+  lz=0;
+  for(i=0;i<32;i++)
+    if(b[i]==0)lz+=8;
+    else{lz+=Math.clz32(b[i])-24;break;}
+  return lz;
+};
+    </script>
+
+    <script async>
+rng_seed=new Uint8Array([
+  0x16,0xe0,0x32,0xd2,0xf4,0xf4,0x16,0x02,0x47,0xcd,0xfe,0x33,0x52,0xfb,0x59,0x05,
+  0x08,0x0a,0x67,0x8c,0x9e,0xa3,0xdc,0x24,0xff,0x5c,0xf8,0x9f,0xfd,0x62,0x29,0x09 ,
+]);
+rng_ctr=0;
+rng_buf=new Uint8Array(32);
+rng_n=new Uint8Array(16);
+rng=(out,off)=>{
+  // warn! in practice, you should re-seed rng every time counter overflows!
+  SU(rng_n,0,++rng_ctr);
+  h(rng_buf,rng_seed,rng_n,12);
+  out.set(rng_buf,off);
+}
+
+
+let PC = new Uint8Array([
+  0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+  0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c,
+  0x0d, 0x0e, 0x0f, 0xfa
+]);
+
+bar=document.getElementById("bar")
+stat=document.getElementById("stat")
+tbar=document.getElementById("tbar")
+set_status=(v)=>{stat.textContent=v}
+update=(p)=>{if(p>1)p=1;bar.style.width=p*100+"%"}
+tupdate=(p)=>{tbar.style.width=p*100+"%"}
+
+buf=new Uint8Array(32);
+salt=new Uint8Array(32);
+
+dopow=(d)=>{
+  const{expect,complexity,mem}=d;
+  rng(salt)
+  i=0
+  previ=0
+  setTimeout(function loop(){
+    update((i+1)/expect);
+    for(y=i;i<y+expect/8+1;i++){
+      c=pow(PC,buf,salt,i,mem,1,4);
+      previ=i;
+      if(c>=complexity){i=-1;update(1);break}
+      else i++;
+    }
+    if(i>=0)setTimeout(loop,0);
+    else next({iters:previ, complexity, mem},(took)=>msph["Balloon4-"+mem]=took/(previ+1))
+  },20)
+};
+
+let next=null; let stepid=0;
+let results={}
+let msph={}
+let buf32=new Uint8Array(32);
+let kchainp=new Uint8Array(32*2+4);
+rng(kchainp,0);
+rng(kchainp,32);
+
+dok=(arg)=>{
+  const{iters,rounds}=arg
+  rng(salt)
+  i=0
+  setTimeout(function loop(){
+    update((i+1)/iters);
+
+    for(y=i;i<iters&&i<y+64;i++)
+      SU(kchainp,64,i),
+      K(buf32,PC,kchainp,rounds)
+
+    if(i<iters)setTimeout(loop,0);
+    else next({iters},(took)=>msph["UnpaddedKChaCha"+rounds]=took/iters)
+  },100);
+};
+
+steps=[
+  ["Warming up JIT (UnpaddedKChaCha4)", {iters: 800, rounds: 4}, dok],
+  ["UnpaddedKChaCha4", {iters: 100, rounds: 4}, dok],
+  ["Warming up JIT (UnpaddedKChaCha8)", {iters: 800, rounds: 8}, dok],
+  ["UnpaddedKChaCha8", {iters: 100, rounds: 8}, dok],
+  ["Warming up JIT (UnpaddedKChaCha12)",{iters: 800, rounds:12}, dok],
+  ["UnpaddedKChaCha12", {iters: 100, rounds: 12}, dok],
+  ["Warming up JIT (Balloon)",null,()=>{
+    rng(salt)
+    i=0
+    setTimeout(function loop(){
+      update((i+1)/128);
+      c=pow(PC,buf,salt,i,Math.min(i/2,8)*1024,1,4);
+      i++;if(i<128)setTimeout(loop,0);
+      else next({})
+    },100);
+  }],
+];
+
+for(i=0;i<8;i++) steps.push(["PoW=8  @ 1KiB, test "+(i+1),  { expect:256,complexity: 8, mem: 1*1024 }, dopow]);
+for(i=0;i<2;i++) steps.push(["PoW=9  @ 1KiB, test "+(i+1),  { expect:512,complexity: 9, mem: 1*1024 }, dopow]);
+for(i=0;i<4;i++) steps.push(["PoW=6  @ 64KiB, test "+(i+1), { expect:64, complexity: 6, mem: 64*1024 }, dopow]);
+for(i=0;i<1;i++) steps.push(["PoW=7  @ 64KiB, test "+(i+1), { expect:128,complexity: 7, mem: 64*1024 }, dopow]);
+for(i=0;i<1;i++) steps.push(["PoW=6  @ 128KiB, test "+(i+1),{ expect:64, complexity: 6, mem: 128*1024 }, dopow]);
+for(i=0;i<1;i++) steps.push(["PoW=5  @ 512KiB, test "+(i+1),{ expect:32, complexity: 5, mem: 512*1024 }, dopow]);
+for(i=0;i<1;i++) steps.push(["PoW=5  @ 1MiB, test "+(i+1),  { expect:32, complexity: 5, mem: 1*1024*1024 }, dopow]);
+steps.push(["Balloon @ 16MiB",  { expect:1, complexity: 0, mem: 16*1024*1024 }, dopow]);
+
+steps.push(["Done!", null, ()=>{
+  tupdate(1);update(1)
+  document.getElementById("res").style.display="block";
+  document.getElementById("res-data").value=JSON.stringify({
+    userAgent: navigator.userAgent,
+    msph,
+    results
+  },null,2);
+}]);
+
+last_start=null;
+next=(data,timingc)=>{
+  if(data!=null){
+    let took=performance.now()-last_start;
+    results[steps[stepid-1][0]]={took, data};
+    if(timingc!=null)timingc(took);
+  }
+  if(stepid<steps.length){
+    tupdate(stepid/steps.length)
+    s=steps[stepid++];set_status(s[0]);
+    last_start=performance.now();
+    s[2](s[1])
+  }
+};
+
+next();
+
+    </script>
+  </body>
+</html>
